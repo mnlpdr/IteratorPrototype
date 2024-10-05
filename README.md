@@ -7,6 +7,8 @@ Este projeto implementa uma **Árvore Binária de Busca** (Binary Search Tree - 
 
 ## Padrões de Projeto Utilizados
 
+![alt text](diagram.png)
+
 ### 1. **Prototype**
    - **Classe Implementada**: `BinarySearchTree<T extends Comparable<T>>`
    - **Objetivo**: O padrão **Prototype** é utilizado para permitir a clonagem de objetos, neste caso, a árvore binária. Em vez de recriar a árvore do zero, a clonagem permite criar uma cópia profunda da árvore, com todos os nós replicados. 
