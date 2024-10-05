@@ -1,6 +1,6 @@
-package tree;
+package utils;
 
-public enum TraversalType {
+public enum traversalTypeEnum {
     PRE_ORDER,
     IN_ORDER,
     POST_ORDER,

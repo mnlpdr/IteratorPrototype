@@ -9,9 +9,9 @@ package tree;
  * @param <T>
  */
 public class Node<T extends Comparable<T>> {
-    T value;
-    Node<T> left;
-    Node<T> right;
+    public T value;
+    public Node<T> left;
+    public Node<T> right;
 
     Node(T value) {
         this.value = value;

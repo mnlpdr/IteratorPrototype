@@ -1,0 +1,95 @@
+@startuml BinarySearchTree
+
+
+interface BstPrototype {
+    + getClone(): BstPrototype
+}
+
+
+interface TreeIterator<T extends Comparable<T>> {
+    + hasNext(): boolean
+    + next(): T
+}
+
+
+enum traversalTypeEnum {
+    + PRE_ORDER
+    + IN_ORDER
+    + POST_ORDER
+    + LEVEL_ORDER
+}
+
+
+class BinarySearchTree<T extends Comparable<T>> {
+    - Node<T> root
+    + BinarySearchTree()
+    + BinarySearchTree(T value)
+    + BinarySearchTree(BinarySearchTree<T> target)
+    + getClone(): BinarySearchTree<T>
+    + getIterator(traversalTypeEnum type): TreeIterator<T>
+    + search(T value): T
+    + add(T value)
+    + delete(T key): T
+    + contains(T key): boolean
+    + isEmpty(): boolean
+    + size(): int
+    + getRoot(): T
+}
+
+
+class Node<T extends Comparable<T>> {
+    + T value
+    + Node<T> left
+    + Node<T> right
+    + Node(T value)
+    + compareTo(Node<T> otherNode): int
+    + toString(): String
+}
+
+
+class TreeIteratorFactory {
+    + static <T> getIterator(traversalTypeEnum type, Node<T> root): TreeIterator<T>
+}
+
+
+class PreOrderIterator<T extends Comparable<T>> {
+    - Stack<Node<T>> stack
+    + PreOrderIterator(Node<T> root)
+    + hasNext(): boolean
+    + next(): T
+}
+
+class InOrderIterator<T extends Comparable<T>> {
+    - Stack<Node<T>> stack
+    - Node<T> currentNode
+    + InOrderIterator(Node<T> root)
+    + hasNext(): boolean
+    + next(): T
+}
+
+class PostOrderIterator<T extends Comparable<T>> {
+    - Stack<Node<T>> stack
+    - Node<T> previousNode
+    + PostOrderIterator(Node<T> root)
+    + hasNext(): boolean
+    + next(): T
+}
+
+class LevelOrderIterator<T extends Comparable<T>> {
+    - Queue<Node<T>> queue
+    + LevelOrderIterator(Node<T> root)
+    + hasNext(): boolean
+    + next(): T
+}
+
+
+BinarySearchTree ..> Node
+BinarySearchTree --> BstPrototype : implements
+BinarySearchTree --> TreeIteratorFactory : uses
+TreeIteratorFactory --> TreeIterator
+TreeIterator <|.. PreOrderIterator
+TreeIterator <|.. InOrderIterator
+TreeIterator <|.. PostOrderIterator
+TreeIterator <|.. LevelOrderIterator
+
+@enduml

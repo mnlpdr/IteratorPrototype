@@ -1,7 +1,10 @@
-package tree;
+package iterator;
 
 import java.util.LinkedList;
 import java.util.Queue;
+
+import interfaces.TreeIterator;
+import tree.Node;
 
 public class LevelOrderIterator<T extends Comparable<T>> implements TreeIterator<T> {
     private Queue<Node<T>> queue;

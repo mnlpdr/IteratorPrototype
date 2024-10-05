@@ -1,6 +1,11 @@
 package tree;
 
-public class BinarySearchTree <T extends Comparable<T>>  {
+import factory.TreeIteratorFactory;
+import interfaces.BstPrototype;
+import interfaces.TreeIterator;
+import utils.traversalTypeEnum;
+
+public class BinarySearchTree<T extends Comparable<T>> implements BstPrototype {
 	private Node<T> root;
 
 	public BinarySearchTree() {
@@ -11,13 +16,43 @@ public class BinarySearchTree <T extends Comparable<T>>  {
 		this.root = new Node<>(value);
 	}
 
-	public T getRoot(){
-		return (T) (root != null? root.value : null);
+	// Clonagem
+
+	public BinarySearchTree(BinarySearchTree<T> target) { // Construtor de cópia
+		if (target != null && target.root != null) {
+			this.root = cloneRecursive(target.root); // Clona os nós da árvore existente
+		} else {
+			this.root = null;
+		}
 	}
 
-	public boolean isEmpty() {
-		return root == null;
+	@Override
+	public BinarySearchTree<T> getClone() { // Metodo de clonagem 
+		BinarySearchTree<T> clonedTree = new BinarySearchTree<>(this);
+		return clonedTree;
 	}
+
+	
+	private Node<T> cloneRecursive(Node<T> current) { // Método recursivo para clonar cada nó da árvore
+		if (current == null) {
+			return null;
+		}
+
+		// Cria um novo nó copiando o valor do nó atual
+		Node<T> newNode = new Node<>(current.value);
+		// Clona o subárvore à esquerda e à direita
+		newNode.left = cloneRecursive(current.left);
+		newNode.right = cloneRecursive(current.right);
+
+		return newNode;
+	}
+
+	// Iterator
+
+	public TreeIterator<T> getIterator(traversalTypeEnum type) {
+		return TreeIteratorFactory.getIterator(type, root);
+	}
+
 
 	public T search(T value) {
 		if (!isEmpty()) {
@@ -108,47 +143,6 @@ public class BinarySearchTree <T extends Comparable<T>>  {
 		return root.value;
 	}
 
-	public void preorder() {
-		System.out.print("Pre-order Traversal:");
-		preorder(root);
-		System.out.println();
-	}
-
-	private void preorder(Node<T> root) {
-		if (root == null)
-			return;
-		System.out.print(" " + root.value);
-		preorder(root.left);
-		preorder(root.right);
-	}
-
-	public void inorder() {
-		System.out.print("In-order Traversal:");
-		inorder(root);
-		System.out.println();
-	}
-
-	private void inorder(Node<T> root) {
-		if (root == null)
-			return;
-		inorder(root.left);
-		System.out.print(" " + root.value);
-		inorder(root.right);
-	}
-
-	public void postorder() {
-		System.out.print("Post-order Traversal:");
-		postorder(root);
-		System.out.println();
-	}
-
-	private void postorder(Node<T> root) {
-		if (root == null)
-			return;
-		postorder(root.left);
-		postorder(root.right);
-		System.out.print(" " + root.value);
-	}
 
 	public int size() {
 		return size(root);
@@ -161,25 +155,13 @@ public class BinarySearchTree <T extends Comparable<T>>  {
 			return 1 + size(root.left) + size(root.right);
 	}
 
-	@Override
-	public BinarySearchTree<T> clone() {
-		BinarySearchTree<T> clonedTree = new BinarySearchTree<T>();
-		clonedTree.root = cloneNode(this.root);
-		return clonedTree;
+	public T getRoot() {
+		return (T) (root != null ? root.value : null);
 	}
 
-	private Node<T> cloneNode(Node<T> node) {
-		if (node == null) {
-			return null;
-		}
-		Node<T> clonedNode = new Node<>(node.value);
-		clonedNode.left = cloneNode(node.left);
-		clonedNode.right = cloneNode(node.right);
-		return clonedNode;
+	public boolean isEmpty() {
+		return root == null;
 	}
 
-	public TreeIterator<T> getIterator(TraversalType type) {
-		return TreeIteratorFactory.getIterator(type, root);
-	}
 
 }

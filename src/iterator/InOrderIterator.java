@@ -1,6 +1,9 @@
-package tree;
+package iterator;
 
 import java.util.Stack;
+
+import interfaces.TreeIterator;
+import tree.Node;
 
 public class InOrderIterator<T extends Comparable<T>> implements TreeIterator<T> {
 	private Stack<Node<T>> stack;
