@@ -9,7 +9,7 @@ public class LevelOrderIterator<T extends Comparable<T>> implements TreeIterator
     public LevelOrderIterator(Node<T> root) {
         queue = new LinkedList<>();
         if (root != null) {
-            queue.offer(root);
+            queue.offer(root); // adiciona a raiz fila se não for nula
         }
     }
 
